@@ -11,3 +11,48 @@
     background-position: bottom;
   }
 }
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
+  background-color: #042859;
+  border-radius: 35px;
+  padding: 12px;
+}
+
+.slider::before {
+  position: inherit;
+  content: "";
+  width: 16px;
+  height: 16px;
+  left: 5px;
+  bottom: 4px;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: 0.4s ease-in-out;
+}
+
+input:checked + .slider::before {
+  transform: translateX(24px);
+}
+
+label:has(input[name="options"]:checked) > div {
+  background-color: #f0f6ff;
+  border-color: #02295a;
+}
