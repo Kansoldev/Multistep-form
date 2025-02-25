@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import SideBar from "./components/SideBar";
 import "./App.css";
 
@@ -9,7 +9,7 @@ function App() {
     phone: "",
   });
 
-  function updateFields(event) {
+  function updateFields(event: ChangeEvent<HTMLInputElement>) {
     setInputs((prevInputs) => {
       return { ...prevInputs, [event.target.name]: event.target.value };
     });
