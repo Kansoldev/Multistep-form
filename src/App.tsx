@@ -10,6 +10,11 @@ function App() {
     email: "",
     phone: "",
   });
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    phone: "",
+  });
 
   const plans = [
     {
@@ -32,10 +37,51 @@ function App() {
     },
   ];
 
+  // Store specific error messages here
+  // To avoid calling setErrors() multiple times
+  let nameErr = "";
+  let emailErr = "";
+  let phoneErr = "";
+
   function updateFields(event: ChangeEvent<HTMLInputElement>) {
     setInputs((prevInputs) => {
       return { ...prevInputs, [event.target.name]: event.target.value };
     });
+  }
+
+  function handleValidation(num: number) {
+    if (inputs.name === "") {
+      nameErr = "This field is required";
+    } else if (inputs.name.length <= 5) {
+      nameErr = "Name must be at least 5 characters long";
+    } else {
+      nameErr = "";
+    }
+
+    if (inputs.email === "") {
+      emailErr = "This field is required";
+    } else {
+      emailErr = "";
+    }
+
+    if (inputs.phone === "") {
+      phoneErr = "This field is required";
+    } else {
+      phoneErr = "";
+    }
+
+    setErrors((prevErrors) => {
+      return {
+        ...prevErrors,
+        name: nameErr,
+        email: emailErr,
+        phone: phoneErr,
+      };
+    });
+
+    if (nameErr === "" && emailErr === "" && phoneErr === "") {
+      setCurrentStep(num);
+    }
   }
 
   return (
@@ -56,12 +102,20 @@ function App() {
                 Name
               </label>
 
+              {errors.name && (
+                <span className="inline-block float-right text-[#ed3548] font-semibold">
+                  {errors.name}
+                </span>
+              )}
+
               <input
                 type="text"
                 id="name"
                 name="name"
                 placeholder="e.g. Stephen King"
-                className="block w-full p-4 py-2 mt-1 border border-solid border-[#adbeff] rounded-md"
+                className={`block w-full p-4 py-2 mt-1 border border-solid ${
+                  errors.name !== "" ? "border-[#ed3548]" : "border-[#adbeff]"
+                } rounded-md`}
                 value={inputs.name}
                 onChange={(e) => updateFields(e)}
               />
@@ -72,12 +126,20 @@ function App() {
                 Email Address
               </label>
 
+              {errors.email && (
+                <span className="inline-block float-right text-[#ed3548] font-semibold">
+                  {errors.email}
+                </span>
+              )}
+
               <input
                 type="email"
                 id="email"
                 name="email"
                 placeholder="e.g. stephenking@lorem.com"
-                className="block w-full p-4 py-2 mt-1 border border-solid border-[#adbeff] rounded-md"
+                className={`block w-full p-4 py-2 mt-1 border border-solid ${
+                  errors.email !== "" ? "border-[#ed3548]" : "border-[#adbeff]"
+                } rounded-md`}
                 value={inputs.email}
                 onChange={(e) => updateFields(e)}
               />
@@ -88,12 +150,20 @@ function App() {
                 Phone Number
               </label>
 
+              {errors.phone && (
+                <span className="inline-block float-right text-[#ed3548] font-semibold">
+                  {errors.phone}
+                </span>
+              )}
+
               <input
                 type="text"
                 id="phone"
                 name="phone"
                 placeholder="e.g. +1 234 567 890"
-                className="block w-full p-4 py-2 mt-1 border border-solid border-[#adbeff] rounded-md"
+                className={`block w-full p-4 py-2 mt-1 border border-solid ${
+                  errors.phone !== "" ? "border-[#ed3548]" : "border-[#adbeff]"
+                } rounded-md`}
                 value={inputs.phone}
                 onChange={(e) => updateFields(e)}
               />
@@ -102,7 +172,7 @@ function App() {
             <button
               type="button"
               className="block bg-[#02295a] text-white px-6 py-3 mt-10 md:mt-28 ml-auto rounded-lg"
-              onClick={() => setCurrentStep(2)}
+              onClick={() => handleValidation(2)}
             >
               Next Step
             </button>
