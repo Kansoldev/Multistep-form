@@ -1,4 +1,4 @@
-const SideBar = () => {
+const SideBar = ({ currentStep }: { currentStep: number }) => {
   const steps = [
     {
       id: 1,
@@ -25,7 +25,13 @@ const SideBar = () => {
           key={step.id}
           className={`uppercase ${step.id > 1 ? "md:mt-7" : ""}`}
         >
-          <span className="flex items-center justify-center rounded-full md:mr-4 mt-1 font-bold md:float-left w-5 h-5 p-5 border border-white text-white">
+          <span
+            className={`flex items-center justify-center rounded-full md:mr-4 mt-1 font-bold md:float-left w-5 h-5 p-5 border ${
+              currentStep === step.id
+                ? "bg-[#bfe2fd]"
+                : "border border-white text-white"
+            }`}
+          >
             {step.id}
           </span>
 

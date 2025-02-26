@@ -86,7 +86,7 @@ function App() {
 
   return (
     <main className="md:bg-white md:flex justify-center gap-10 mx-auto md:rounded-2xl md:p-4 md:pr-16">
-      <SideBar />
+      <SideBar currentStep={currentStep} />
 
       <form>
         {currentStep === 1 && (
