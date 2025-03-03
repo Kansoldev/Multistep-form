@@ -189,7 +189,7 @@ function App() {
               You have the option of monthly/yearly billing
             </p>
 
-            <div className="flex flex-col md:flex-row justify-between gap-5 text-white mt-5">
+            <div className="flex flex-col md:flex-row justify-between gap-4 text-white mt-5">
               {plans.map((plan) => (
                 <label key={plan.name} htmlFor={plan.name} className="flex-1">
                   <input
