@@ -91,7 +91,7 @@ function App() {
       <form>
         {currentStep === 1 && (
           <div className="bg-white md:bg-transparent rounded-xl -mt-10 mx-5 md:mt-10 md:mx-0 shadow-xl md:shadow-none p-8 md:p-0">
-            <h2 className="font-bold text-3xl">Personal Info</h2>
+            <h2 className="font-bold text-3xl text-[#02295a]">Personal Info</h2>
 
             <p className="my-3 md:mb-5 text-[#9699ab]">
               Please provide your name, email address and phone number
