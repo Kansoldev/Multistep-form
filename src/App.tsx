@@ -254,16 +254,16 @@ function App() {
               </span>
             </div>
 
-            <div className="flex justify-between w-full">
+            <div className="flex justify-between w-full mt-10 md:mt-28">
               <button
                 type="button"
-                className="px-6 py-3 mt-10 md:mt-24 block text-[#02295a] rounded-lg"
+                className="px-6 py-3 block text-[#02295a] rounded-lg"
                 onClick={() => setCurrentStep((prevStep) => prevStep - 1)}
               >
                 Go Back
               </button>
 
-              <button className="px-6 py-3 mt-10 md:mt-24 block bg-[#02295a] text-white rounded-lg">
+              <button className="px-6 py-3 block bg-[#02295a] text-white rounded-lg">
                 Next Step
               </button>
             </div>
