@@ -185,7 +185,7 @@ function App() {
               Select your plan
             </h2>
 
-            <p className="mt-2 md:mb-7 text-[#9699ab]">
+            <p className="my-3 md:mb-5 text-[#9699ab]">
               You have the option of monthly/yearly billing
             </p>
 
