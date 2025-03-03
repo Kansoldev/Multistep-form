@@ -240,6 +240,7 @@ function App() {
               <label className="switch">
                 <input
                   type="checkbox"
+                  data-checked={radioChecked}
                   onChange={() => setRadioChecked(!radioChecked)}
                 />
                 <span className="slider"></span>
