@@ -228,7 +228,7 @@ function App() {
               ))}
             </div>
 
-            <div className="bg-[#f8f9fe] mt-10 flex justify-center items-center gap-6 py-3 rounded-md">
+            <div className="bg-[#f8f9fe] mt-12 flex justify-center items-center gap-6 py-3 rounded-md">
               <span
                 className={`text-[#02295a] text-sm ${
                   !radioChecked ? "font-bold" : ""
