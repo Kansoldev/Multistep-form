@@ -15,6 +15,10 @@ function App() {
     email: "",
     phone: "",
   });
+  const [currentPlan, setCurrentPlan] = useState({
+    name: "arcade",
+    price: "$9/mo",
+  });
 
   const plans = [
     {
@@ -82,6 +86,18 @@ function App() {
     if (nameErr === "" && emailErr === "" && phoneErr === "") {
       setCurrentStep(num);
     }
+  }
+
+  function handlePlanUpdate(plan: {
+    name: string;
+    icon: string;
+    monthPrice: string;
+    yearPrice: string;
+  }) {
+    setCurrentPlan({
+      name: plan.name,
+      price: radioChecked ? plan.yearPrice : plan.monthPrice,
+    });
   }
 
   return (
@@ -199,6 +215,7 @@ function App() {
                     value={plan.name}
                     className="absolute opacity-0 w-0 h-0"
                     defaultChecked={plan.name === "arcade"}
+                    onChange={() => handlePlanUpdate(plan)}
                   />
 
                   <div className="flex items-center gap-3 border border-solid border-[#166a79] md:inline-block p-3 pr-14 rounded-md w-full relative">
