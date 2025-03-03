@@ -52,7 +52,7 @@ function App() {
   function handleValidation(num: number) {
     if (inputs.name === "") {
       nameErr = "This field is required";
-    } else if (inputs.name.length <= 5) {
+    } else if (inputs.name.length < 5) {
       nameErr = "Name must be at least 5 characters long";
     } else {
       nameErr = "";
