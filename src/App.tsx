@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import SideBar from "./components/SideBar";
 import "./App.css";
 
@@ -40,6 +40,20 @@ function App() {
       yearPrice: "$150/yr",
     },
   ];
+
+  useEffect(() => {
+    // Get the index of selected plan from the array of objects
+    const planIndex = plans.findIndex((plan) => plan.name === currentPlan.name);
+
+    setCurrentPlan(() => {
+      return {
+        name: currentPlan.name,
+        price: radioChecked
+          ? plans[planIndex].yearPrice
+          : plans[planIndex].monthPrice,
+      };
+    });
+  }, [radioChecked]);
 
   // Store specific error messages here
   // To avoid calling setErrors() multiple times
