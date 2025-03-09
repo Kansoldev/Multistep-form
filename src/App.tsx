@@ -228,7 +228,7 @@ function App() {
                     id={plan.name}
                     value={plan.name}
                     className="absolute opacity-0 w-0 h-0"
-                    defaultChecked={plan.name === "arcade"}
+                    defaultChecked={plan.name === currentPlan.name}
                     onChange={() => handlePlanUpdate(plan)}
                   />
 
