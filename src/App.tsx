@@ -19,6 +19,7 @@ function App() {
     name: "arcade",
     price: "$9/mo",
   });
+  const [selectedAddons, setSelectedAddons] = useState<{ name: string }[]>([]);
 
   const plans = [
     {
@@ -38,6 +39,27 @@ function App() {
       icon: "/icon-pro.svg",
       monthPrice: "$15/mo",
       yearPrice: "$150/yr",
+    },
+  ];
+
+  const addons = [
+    {
+      name: "online service",
+      desc: "Access to multiplayer games",
+      monthlyPrice: "1/mo",
+      yearlyPrice: "10/yr",
+    },
+    {
+      name: "larger storage",
+      desc: "Extra 1TB of cloud save",
+      monthlyPrice: "2/mo",
+      yearlyPrice: "20/yr",
+    },
+    {
+      name: "customizable profile",
+      desc: "Custom theme on your profile",
+      monthlyPrice: "2/mo",
+      yearlyPrice: "20/yr",
     },
   ];
 
@@ -99,6 +121,39 @@ function App() {
 
     if (nameErr === "" && emailErr === "" && phoneErr === "") {
       setCurrentStep(num);
+    }
+  }
+
+  function findArrayIndex(item: { name: string }) {
+    return selectedAddons.findIndex((addon) => addon.name === item.name);
+  }
+
+  function handleUserAddons(userAddons: {
+    name: string;
+    monthlyPrice: string;
+    yearlyPrice: string;
+  }) {
+    const addonIndex = findArrayIndex(userAddons);
+
+    if (addonIndex === -1) {
+      // The addon is not in the array before, so push it inside the selectedAddon array
+      const newSelectedAddons = [
+        ...selectedAddons,
+        {
+          name: userAddons.name,
+          price: radioChecked
+            ? userAddons.yearlyPrice
+            : userAddons.monthlyPrice,
+        },
+      ];
+
+      setSelectedAddons(newSelectedAddons);
+    } else {
+      const newSelectedAddons = selectedAddons.filter(
+        (addon) => addon.name !== userAddons.name
+      );
+
+      setSelectedAddons(newSelectedAddons);
     }
   }
 
@@ -287,6 +342,68 @@ function App() {
             </div>
 
             <div className="flex justify-between w-full mt-10 md:mt-28">
+              <button
+                type="button"
+                className="px-6 py-3 block text-[#02295a] rounded-lg"
+                onClick={() => setCurrentStep((prevStep) => prevStep - 1)}
+              >
+                Go Back
+              </button>
+
+              <button
+                type="button"
+                className="px-6 py-3 block bg-[#02295a] text-white rounded-lg"
+                onClick={() => setCurrentStep(3)}
+              >
+                Next Step
+              </button>
+            </div>
+          </div>
+        )}
+
+        {currentStep === 3 && (
+          <div className="bg-white md:bg-transparent rounded-xl -mt-10 mx-5 md:mt-10 md:mx-0 shadow-xl md:shadow-none p-7 md:p-0">
+            <h2 className="font-bold text-3xl text-[#02295a]">Pick add-ons</h2>
+
+            <p className="mt-2 md:mb-7 text-[#9699ab]">
+              Add-ons help enhance your gaming experience
+            </p>
+
+            {addons.map((addon) => (
+              <label
+                key={addon.name}
+                htmlFor={addon.name}
+                className="block mt-4"
+              >
+                <input
+                  type="checkbox"
+                  name="addons"
+                  id={addon.name}
+                  value={addon.name}
+                  className="absolute opacity-0 w-0 h-0"
+                  onClick={() => handleUserAddons(addon)}
+                  defaultChecked={findArrayIndex(addon) !== -1}
+                />
+
+                <div className="border border-solid border-[#d6d9e6] p-4 min-[420px]:flex items-center justify-between rounded-lg">
+                  <span className="block w-5 h-5 bg-white rounded-[4px] border border-solid border-[#d6d9e6] cursor-pointer"></span>
+
+                  <div className="basis-48 md:basis-40 md:ml-5">
+                    <h3 className="text-[#02295a] font-bold mt-3 min-[420px]:mt-0">
+                      {addon.name.substring(0, 1).toUpperCase() +
+                        addon.name.substring(1)}
+                    </h3>
+                    <p className="text-[#9699ab] text-sm"> {addon.desc}</p>
+                  </div>
+
+                  <span className="text-[#473dff]">
+                    +${radioChecked ? addon.yearlyPrice : addon.monthlyPrice}
+                  </span>
+                </div>
+              </label>
+            ))}
+
+            <div className="flex justify-between w-full mt-10 md:mt-24">
               <button
                 type="button"
                 className="px-6 py-3 block text-[#02295a] rounded-lg"

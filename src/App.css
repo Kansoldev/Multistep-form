@@ -52,7 +52,12 @@ input[data-checked="true"] + .slider::before {
   transform: translateX(24px);
 }
 
-label:has(input[name="options"]:checked) > div {
+label:has(input[name="options"]:checked) > div,
+label:has(input[name="addons"]:checked) > div {
   background-color: #f0f6ff;
   border-color: #02295a;
+}
+
+label:has(input[name="addons"]:checked) > div > span:first-of-type {
+  background-color: #473dff;
 }
