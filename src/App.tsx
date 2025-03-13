@@ -83,6 +83,10 @@ function App() {
   let emailErr = "";
   let phoneErr = "";
 
+  function capitalizeFirstLetter(value: string) {
+    return value.substring(0, 1).toUpperCase() + value.substring(1);
+  }
+
   function updateFields(event: ChangeEvent<HTMLInputElement>) {
     setInputs((prevInputs) => {
       return { ...prevInputs, [event.target.name]: event.target.value };
@@ -294,9 +298,7 @@ function App() {
 
                     <div className="plan-details">
                       <h4 className="text-[#02295a] font-bold md:mt-10">
-                        {/* Make first letter capital */}
-                        {plan.name.substring(0, 1).toUpperCase() +
-                          plan.name.substring(1)}
+                        {capitalizeFirstLetter(plan.name)}
                       </h4>
 
                       <p className="text-[#9699ab]">
@@ -390,8 +392,7 @@ function App() {
 
                   <div className="basis-48 md:basis-40 md:ml-5">
                     <h3 className="text-[#02295a] font-bold mt-3 min-[420px]:mt-0">
-                      {addon.name.substring(0, 1).toUpperCase() +
-                        addon.name.substring(1)}
+                      {capitalizeFirstLetter(addon.name)}
                     </h3>
                     <p className="text-[#9699ab] text-sm"> {addon.desc}</p>
                   </div>
