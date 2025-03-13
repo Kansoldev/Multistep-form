@@ -46,20 +46,20 @@ function App() {
     {
       name: "online service",
       desc: "Access to multiplayer games",
-      monthlyPrice: "1/mo",
-      yearlyPrice: "10/yr",
+      monthlyPrice: 1,
+      yearlyPrice: 10,
     },
     {
       name: "larger storage",
       desc: "Extra 1TB of cloud save",
-      monthlyPrice: "2/mo",
-      yearlyPrice: "20/yr",
+      monthlyPrice: 2,
+      yearlyPrice: 20,
     },
     {
       name: "customizable profile",
       desc: "Custom theme on your profile",
-      monthlyPrice: "2/mo",
-      yearlyPrice: "20/yr",
+      monthlyPrice: 2,
+      yearlyPrice: 20,
     },
   ];
 
@@ -149,8 +149,8 @@ function App() {
 
   function handleUserAddons(userAddons: {
     name: string;
-    monthlyPrice: string;
-    yearlyPrice: string;
+    monthlyPrice: number;
+    yearlyPrice: number;
   }) {
     const addonIndex = findArrayIndex(userAddons);
 
@@ -415,7 +415,10 @@ function App() {
                   </div>
 
                   <span className="text-[#473dff]">
-                    +${radioChecked ? addon.yearlyPrice : addon.monthlyPrice}
+                    +$
+                    {radioChecked
+                      ? `${addon.yearlyPrice}/yr`
+                      : `${addon.monthlyPrice}/mo`}
                   </span>
                 </div>
               </label>
