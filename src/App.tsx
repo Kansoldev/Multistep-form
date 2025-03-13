@@ -75,6 +75,21 @@ function App() {
           : plans[planIndex].monthPrice,
       };
     });
+
+    const updatedSelectedAddons = selectedAddons
+      .map((selectedAddon) =>
+        addons.findIndex((addon) => addon.name === selectedAddon.name)
+      )
+      .map((addonIndex) => {
+        return {
+          name: addons[addonIndex].name,
+          price: radioChecked
+            ? addons[addonIndex].yearlyPrice
+            : addons[addonIndex].monthlyPrice,
+        };
+      });
+
+    setSelectedAddons(updatedSelectedAddons);
   }, [radioChecked]);
 
   // Store specific error messages here
