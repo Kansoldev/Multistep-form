@@ -17,7 +17,7 @@ function App() {
   });
   const [currentPlan, setCurrentPlan] = useState({
     name: "arcade",
-    price: "$9/mo",
+    price: 9,
   });
   const [selectedAddons, setSelectedAddons] = useState<{ name: string }[]>([]);
 
@@ -25,20 +25,20 @@ function App() {
     {
       name: "arcade",
       icon: "/icon-arcade.svg",
-      monthPrice: "$9/mo",
-      yearPrice: "$90/yr",
+      monthPrice: 9,
+      yearPrice: 90,
     },
     {
       name: "advanced",
       icon: "/icon-advanced.svg",
-      monthPrice: "$12/mo",
-      yearPrice: "$120/yr",
+      monthPrice: 12,
+      yearPrice: 120,
     },
     {
       name: "pro",
       icon: "/icon-pro.svg",
-      monthPrice: "$15/mo",
-      yearPrice: "$150/yr",
+      monthPrice: 15,
+      yearPrice: 150,
     },
   ];
 
@@ -164,8 +164,8 @@ function App() {
   function handlePlanUpdate(plan: {
     name: string;
     icon: string;
-    monthPrice: string;
-    yearPrice: string;
+    monthPrice: number;
+    yearPrice: number;
   }) {
     setCurrentPlan({
       name: plan.name,
@@ -302,7 +302,9 @@ function App() {
                       </h4>
 
                       <p className="text-[#9699ab]">
-                        {radioChecked ? plan.yearPrice : plan.monthPrice}
+                        {radioChecked
+                          ? `$${plan.yearPrice}/yr`
+                          : `$${plan.monthPrice}/mo`}
                       </p>
 
                       {radioChecked && (
