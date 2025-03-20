@@ -195,7 +195,7 @@ function App() {
   }
 
   return (
-    <main className="md:bg-white md:flex justify-center gap-10 mx-auto md:rounded-2xl md:p-4 md:pr-16">
+    <main className="md:bg-white md:flex justify-between gap-10 mx-auto md:rounded-2xl lg:w-[950px] md:p-4 md:pr-10 lg:pr-20 h-full">
       <SideBar currentStep={currentStep} />
 
       <form>
