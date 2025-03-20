@@ -52,6 +52,11 @@ input[data-checked="true"] + .slider::before {
   transform: translateX(24px);
 }
 
+label:has(input[name="options"]) > div:hover,
+label:has(input[name="addons"]) > div:hover {
+  cursor: pointer;
+}
+
 label:has(input[name="options"]:checked) > div,
 label:has(input[name="addons"]:checked) > div {
   background-color: #f0f6ff;
@@ -60,4 +65,12 @@ label:has(input[name="addons"]:checked) > div {
 
 label:has(input[name="addons"]:checked) > div > span:first-of-type {
   background-color: #473dff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+label:has(input[name="addons"]:checked) > div > span:first-of-type::before {
+  content: url("icon-checkmark.svg");
+  font-size: 0.75rem;
 }
