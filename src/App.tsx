@@ -22,6 +22,7 @@ function App() {
   const [selectedAddons, setSelectedAddons] = useState<
     { name: string; price: number }[]
   >([]);
+  const [formCompleted, setFormCompleted] = useState(false);
 
   const plans = [
     {
@@ -450,84 +451,116 @@ function App() {
         )}
 
         {currentStep === 4 && (
-          <div className="bg-white md:bg-transparent rounded-xl -mt-10 mx-5 md:mt-10 md:mx-0 shadow-xl md:shadow-none p-7 md:p-0 md:relative h-[90%]">
-            <h2 className="font-bold text-3xl text-[#02295a]">Finishing up</h2>
+          <>
+            <div
+              className={`bg-white md:bg-transparent rounded-xl -mt-10 mx-5 md:mt-10 md:mx-0 shadow-xl md:shadow-none p-7 md:p-0 md:relative h-[90%] ${
+                formCompleted ? "hidden" : ""
+              }`}
+            >
+              <h2 className="font-bold text-3xl text-[#02295a]">
+                Finishing up
+              </h2>
 
-            <p className="mt-2 md:mb-7 text-[#9699ab]">
-              Double-check everything looks OK before confirming
-            </p>
+              <p className="mt-2 md:mb-7 text-[#9699ab]">
+                Double-check everything looks OK before confirming
+              </p>
 
-            <div className="p-4 bg-[#fafbff]">
-              <div className="flex justify-between items-center">
-                <span className="font-semibold">
-                  {`${capitalizeFirstLetter(currentPlan.name)} (${
-                    radioChecked ? "Yearly" : "Monthly"
-                  })`}
-                  <br />
-                  <a
-                    href={"#"}
-                    className="text-[#9699ab] underline font-medium text-sm"
-                    onClick={() => setCurrentStep(2)}
-                  >
-                    Change
-                  </a>
-                </span>
+              <div className="p-4 bg-[#fafbff]">
+                <div className="flex justify-between items-center">
+                  <span className="font-semibold">
+                    {`${capitalizeFirstLetter(currentPlan.name)} (${
+                      radioChecked ? "Yearly" : "Monthly"
+                    })`}
+                    <br />
+                    <a
+                      href={"#"}
+                      className="text-[#9699ab] underline font-medium text-sm"
+                      onClick={() => setCurrentStep(2)}
+                    >
+                      Change
+                    </a>
+                  </span>
 
-                <span className="font-bold text-[#02295a]">
-                  $
-                  {radioChecked
-                    ? `${currentPlan.price}/yr`
-                    : `${currentPlan.price}/mo`}
+                  <span className="font-bold text-[#02295a]">
+                    $
+                    {radioChecked
+                      ? `${currentPlan.price}/yr`
+                      : `${currentPlan.price}/mo`}
+                  </span>
+                </div>
+
+                {selectedAddons.length > 0 && <hr className="my-5" />}
+
+                {selectedAddons.map((addons) => {
+                  selectedAddonPrices += addons.price;
+
+                  return (
+                    <div
+                      key={addons.name}
+                      className="flex justify-between mt-3"
+                    >
+                      <span className="text-[#9699ab]">
+                        {capitalizeFirstLetter(addons.name)}
+                      </span>
+
+                      <span className="text-[#02295a] font-medium">
+                        +$
+                        {radioChecked
+                          ? `${addons.price}/yr`
+                          : `${addons.price}/mo`}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="result flex justify-between mt-3 px-4 pt-3">
+                <span className="text-[#9699ab]">Total</span>
+                <span className="text-[#473dff] text-xl font-bold">
+                  ${currentPlan.price + selectedAddonPrices}
+                  {radioChecked ? "/yr" : "/mo"}
                 </span>
               </div>
 
-              {selectedAddons.length > 0 && <hr className="my-5" />}
+              <div className="flex justify-between bg-white p-4 md:p-0 absolute right-0 bottom-0 left-0 mt-5">
+                <button
+                  type="button"
+                  className="text-[#02295a] rounded-lg ml-2"
+                  onClick={() => setCurrentStep((prevStep) => prevStep - 1)}
+                >
+                  Go Back
+                </button>
 
-              {selectedAddons.map((addons) => {
-                selectedAddonPrices += addons.price;
-
-                return (
-                  <div key={addons.name} className="flex justify-between mt-3">
-                    <span className="text-[#9699ab]">
-                      {capitalizeFirstLetter(addons.name)}
-                    </span>
-
-                    <span className="text-[#02295a] font-medium">
-                      +$
-                      {radioChecked
-                        ? `${addons.price}/yr`
-                        : `${addons.price}/mo`}
-                    </span>
-                  </div>
-                );
-              })}
+                <button
+                  type="button"
+                  className="px-6 py-3 block bg-[#473dff] text-white rounded-lg"
+                  onClick={() => setFormCompleted(true)}
+                >
+                  Confirm
+                </button>
+              </div>
             </div>
 
-            <div className="result flex justify-between mt-3 px-4 pt-3">
-              <span className="text-[#9699ab]">Total</span>
-              <span className="text-[#473dff] text-xl font-bold">
-                ${currentPlan.price + selectedAddonPrices}
-                {radioChecked ? "/yr" : "/mo"}
-              </span>
-            </div>
+            {formCompleted && (
+              <div className="bg-white md:bg-transparent rounded-xl shadow-xl md:shadow-none px-4 py-16 md:p-0 text-center flex flex-col justify-center w-[500px] h-full">
+                <img
+                  src="/icon-thank-you.svg"
+                  width={80}
+                  className="block mx-auto"
+                />
 
-            <div className="flex justify-between bg-white p-4 md:p-0 absolute right-0 bottom-0 left-0 mt-5">
-              <button
-                type="button"
-                className="text-[#02295a] rounded-lg ml-2"
-                onClick={() => setCurrentStep((prevStep) => prevStep - 1)}
-              >
-                Go Back
-              </button>
+                <h2 className="font-bold text-3xl mt-8 text-[#02295a]">
+                  Thank you!
+                </h2>
 
-              <button
-                type="button"
-                className="px-6 py-3 block bg-[#473dff] text-white rounded-lg"
-              >
-                Confirm
-              </button>
-            </div>
-          </div>
+                <p className="mt-3 text-[#9699ab]">
+                  Thanks for confirming your subscription!, We hope you have fun
+                  using our platform. if you ever need support, please feel free
+                  to email us at support@loremgaming.com
+                </p>
+              </div>
+            )}
+          </>
         )}
       </form>
     </main>
