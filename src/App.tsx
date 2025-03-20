@@ -200,7 +200,7 @@ function App() {
 
       <form className="flex-1 md:ml-8">
         {currentStep === 1 && (
-          <div className="bg-white md:bg-transparent rounded-xl -mt-10 mx-5 md:mt-10 md:mx-0 shadow-xl md:shadow-none p-8 md:p-0">
+          <div className="bg-white md:bg-transparent rounded-xl -mt-10 mx-5 md:mt-10 md:mx-0 shadow-xl md:shadow-none p-8 md:p-0 md:relative md:h-[90%]">
             <h2 className="font-bold text-3xl text-[#02295a]">Personal Info</h2>
 
             <p className="my-3 md:mb-5 text-[#9699ab]">
@@ -279,29 +279,31 @@ function App() {
               />
             </div>
 
-            <button
-              type="button"
-              className="block bg-[#02295a] text-white px-6 py-3 mt-10 md:mt-28 ml-auto rounded-lg"
-              onClick={() => handleValidation(2)}
-            >
-              Next Step
-            </button>
+            <div className="bg-white p-4 md:p-0 absolute bottom-0 left-0 right-0 mt-5">
+              <button
+                type="button"
+                className="bg-[#02295a] text-white px-6 py-3 rounded-md float-right"
+                onClick={() => handleValidation(2)}
+              >
+                Next Step
+              </button>
+            </div>
           </div>
         )}
 
         {currentStep === 2 && (
-          <div className="bg-white md:bg-transparent rounded-xl -mt-10 mx-5 md:mt-10 md:mx-0 shadow-xl md:shadow-none p-7 md:p-0">
+          <div className="bg-white md:bg-transparent rounded-xl -mt-10 mx-5 md:mt-10 md:mx-0 shadow-xl md:shadow-none p-6 pb-3 md:p-0 md:relative md:h-[90%]">
             <h2 className="font-bold text-3xl text-[#02295a]">
               Select your plan
             </h2>
 
-            <p className="my-3 md:mb-5 text-[#9699ab]">
+            <p className="mt-3 md:mb-5 text-[#9699ab]">
               You have the option of monthly/yearly billing
             </p>
 
-            <div className="flex flex-col md:flex-row justify-between gap-4 text-white mt-5">
+            <div className="flex flex-col md:flex-row gap-3 md:gap-6 text-white mt-4">
               {plans.map((plan) => (
-                <label key={plan.name} htmlFor={plan.name} className="flex-1">
+                <label key={plan.name} htmlFor={plan.name}>
                   <input
                     type="radio"
                     name="options"
@@ -312,13 +314,13 @@ function App() {
                     onChange={() => handlePlanUpdate(plan)}
                   />
 
-                  <div className="flex items-center gap-3 border border-solid border-[#166a79] md:inline-block p-3 pr-14 rounded-md w-full relative">
+                  <div className="flex items-center border border-solid border-[#d6d9e6] md:inline-block rounded-md p-3 lg:w-[120px]">
                     <div className="w-10 h-10 rounded-full">
                       <img src={plan.icon} alt="" />
                     </div>
 
-                    <div className="plan-details">
-                      <h4 className="text-[#02295a] font-bold md:mt-10">
+                    <div className="plan-details ml-3 md:ml-0">
+                      <h4 className="text-[#02295a] font-bold md:mt-7">
                         {capitalizeFirstLetter(plan.name)}
                       </h4>
 
@@ -329,7 +331,7 @@ function App() {
                       </p>
 
                       {radioChecked && (
-                        <span className="mt-2 text-[#02295a]">
+                        <span className="mt-2 text-[#02295a] text-sm font-semibold">
                           2 months free
                         </span>
                       )}
@@ -339,7 +341,7 @@ function App() {
               ))}
             </div>
 
-            <div className="bg-[#f8f9fe] mt-12 flex justify-center items-center gap-6 py-3 rounded-md">
+            <div className="bg-[#f8f9fe] mt-3 md:mt-10 mb-3 flex justify-center items-center gap-6 py-3 rounded-md">
               <span
                 className={`text-[#02295a] text-sm ${
                   !radioChecked ? "font-bold" : ""
@@ -366,10 +368,10 @@ function App() {
               </span>
             </div>
 
-            <div className="flex justify-between w-full mt-10 md:mt-28">
+            <div className="flex justify-between bg-white p-4 md:p-0 absolute right-0 bottom-0 left-0 mt-5">
               <button
                 type="button"
-                className="px-6 py-3 block text-[#02295a] rounded-lg"
+                className="text-[#02295a] rounded-lg ml-2"
                 onClick={() => setCurrentStep((prevStep) => prevStep - 1)}
               >
                 Go Back
@@ -377,7 +379,7 @@ function App() {
 
               <button
                 type="button"
-                className="px-6 py-3 block bg-[#02295a] text-white rounded-lg"
+                className="bg-[#02295a] text-white px-6 py-3 rounded-md"
                 onClick={() => setCurrentStep(3)}
               >
                 Next Step
@@ -387,7 +389,7 @@ function App() {
         )}
 
         {currentStep === 3 && (
-          <div className="bg-white md:bg-transparent rounded-xl -mt-10 mx-5 md:mt-10 md:mx-0 shadow-xl md:shadow-none p-7 md:p-0">
+          <div className="bg-white md:bg-transparent rounded-xl -mt-10 mx-5 md:mt-10 md:mx-0 shadow-xl md:shadow-none p-8 md:p-0 md:relative h-[90%]">
             <h2 className="font-bold text-3xl text-[#02295a]">Pick add-ons</h2>
 
             <p className="mt-2 md:mb-7 text-[#9699ab]">
@@ -413,7 +415,7 @@ function App() {
                 <div className="border border-solid border-[#d6d9e6] p-4 min-[420px]:flex items-center justify-between rounded-lg">
                   <span className="block w-5 h-5 bg-white rounded-[4px] border border-solid border-[#d6d9e6] cursor-pointer"></span>
 
-                  <div className="basis-48 md:basis-40 md:ml-5">
+                  <div className="basis-56 md:ml-5 lg:ml-0">
                     <h3 className="text-[#02295a] font-bold mt-3 min-[420px]:mt-0">
                       {capitalizeFirstLetter(addon.name)}
                     </h3>
@@ -430,10 +432,10 @@ function App() {
               </label>
             ))}
 
-            <div className="flex justify-between w-full mt-10 md:mt-24">
+            <div className="flex justify-between bg-white p-4 md:p-0 absolute right-0 bottom-0 left-0 mt-5">
               <button
                 type="button"
-                className="px-6 py-3 block text-[#02295a] rounded-lg"
+                className="text-[#02295a] rounded-lg ml-2"
                 onClick={() => setCurrentStep((prevStep) => prevStep - 1)}
               >
                 Go Back
@@ -441,7 +443,7 @@ function App() {
 
               <button
                 type="button"
-                className="px-6 py-3 block bg-[#02295a] text-white rounded-lg"
+                className="bg-[#02295a] text-white px-6 py-3 rounded-md"
                 onClick={() => setCurrentStep(4)}
               >
                 Next Step
@@ -542,7 +544,7 @@ function App() {
             </div>
 
             {formCompleted && (
-              <div className="bg-white md:bg-transparent rounded-xl shadow-xl md:shadow-none px-4 py-16 md:p-0 text-center flex flex-col justify-center w-[500px] h-full">
+              <div className="bg-white md:bg-transparent rounded-xl shadow-xl md:shadow-none px-4 py-16 md:p-0 text-center flex flex-col justify-center h-full">
                 <img
                   src="/icon-thank-you.svg"
                   width={80}
