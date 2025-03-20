@@ -198,7 +198,7 @@ function App() {
     <main className="md:bg-white md:flex justify-between gap-10 mx-auto md:rounded-2xl lg:w-[950px] md:p-4 md:pr-10 lg:pr-20 h-full">
       <SideBar currentStep={currentStep} />
 
-      <form>
+      <form className="flex-1 md:ml-8">
         {currentStep === 1 && (
           <div className="bg-white md:bg-transparent rounded-xl -mt-10 mx-5 md:mt-10 md:mx-0 shadow-xl md:shadow-none p-8 md:p-0">
             <h2 className="font-bold text-3xl text-[#02295a]">Personal Info</h2>
