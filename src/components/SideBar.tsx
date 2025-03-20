@@ -19,7 +19,7 @@ const SideBar = ({ currentStep }: { currentStep: number }) => {
   ];
 
   return (
-    <div className="md:min-w-[350px] min-h-[150px] md:h-[550px] p-8 pt-9 md:pt-12 flex justify-center gap-6 md:block md:rounded-2xl sidebar">
+    <div className="md:min-w-[250px] lg:min-w-[350px] min-h-[150px] md:h-[550px] p-8 pt-9 md:pt-12 flex justify-center gap-6 md:block md:rounded-2xl sidebar">
       {steps.map((step) => (
         <div
           key={step.id}
