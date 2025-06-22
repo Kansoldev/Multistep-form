@@ -1,4 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
+import { capitalizeFirstLetter, findArrayIndex } from "./utils";
 import SideBar from "./components/SideBar";
 import "./App.css";
 
@@ -104,10 +105,6 @@ function App() {
   let emailErr = "";
   let phoneErr = "";
 
-  function capitalizeFirstLetter(value: string) {
-    return value.substring(0, 1).toUpperCase() + value.substring(1);
-  }
-
   function updateFields(event: ChangeEvent<HTMLInputElement>) {
     setInputs((prevInputs) => {
       return { ...prevInputs, [event.target.name]: event.target.value };
@@ -149,16 +146,12 @@ function App() {
     }
   }
 
-  function findArrayIndex(item: { name: string }) {
-    return selectedAddons.findIndex((addon) => addon.name === item.name);
-  }
-
   function handleUserAddons(userAddons: {
     name: string;
     monthlyPrice: number;
     yearlyPrice: number;
   }) {
-    const addonIndex = findArrayIndex(userAddons);
+    const addonIndex = findArrayIndex(selectedAddons, userAddons);
 
     if (addonIndex === -1) {
       // The addon is not in the array before, so push it inside the selectedAddon array
@@ -409,7 +402,7 @@ function App() {
                   value={addon.name}
                   className="absolute opacity-0 w-0 h-0"
                   onClick={() => handleUserAddons(addon)}
-                  defaultChecked={findArrayIndex(addon) !== -1}
+                  defaultChecked={findArrayIndex(selectedAddons, addon) !== -1}
                 />
 
                 <div className="border border-solid border-[#d6d9e6] p-4 min-[420px]:flex items-center justify-between rounded-lg">
