@@ -1,5 +1,6 @@
 import { useState, useEffect, ChangeEvent } from "react";
 import SideBar from "./SideBar";
+import PersonalInfo from "./PersonalInfo";
 import { findArrayIndex, capitalizeFirstLetter } from "../utils";
 
 // Store specific error messages here
@@ -103,7 +104,7 @@ const RegistrationFlow = () => {
     setSelectedAddons(updatedSelectedAddons);
   }, [radioChecked]);
 
-  function updateFields(event: ChangeEvent<HTMLInputElement>) {
+  function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
     setInputs((prevInputs) => {
       return { ...prevInputs, [event.target.name]: event.target.value };
     });
@@ -191,105 +192,16 @@ const RegistrationFlow = () => {
 
       <form className="flex-1 md:ml-8">
         {currentStep === 1 && (
-          <div className="bg-white md:bg-transparent rounded-xl -mt-10 mx-5 md:mt-10 md:mx-0 shadow-xl md:shadow-none p-8 md:p-0 md:relative md:h-[90%]">
-            <h2 className="font-bold text-3xl text-[#02295a]">Personal Info</h2>
-
-            <p className="my-3 md:mb-5 text-[#9699ab]">
-              Please provide your name, email address and phone number
-            </p>
-
-            <div>
-              <label htmlFor="name" className="text-[#02295a] font-semibold">
-                Name
-              </label>
-
-              {formErrors.name && (
-                <span className="inline-block float-right text-[#ed3548] font-semibold">
-                  {formErrors.name}
-                </span>
-              )}
-
-              <input
-                type="text"
-                id="name"
-                name="name"
-                placeholder="e.g. Stephen King"
-                className={`block w-full p-4 py-2 mt-1 border border-solid ${
-                  formErrors.name !== ""
-                    ? "border-[#ed3548]"
-                    : "border-[#adbeff]"
-                } rounded-md`}
-                value={inputs.name}
-                onChange={(e) => updateFields(e)}
-              />
-            </div>
-
-            <div className="mt-5">
-              <label htmlFor="email" className="text-[#02295a] font-semibold">
-                Email Address
-              </label>
-
-              {formErrors.email && (
-                <span className="inline-block float-right text-[#ed3548] font-semibold">
-                  {formErrors.email}
-                </span>
-              )}
-
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="e.g. stephenking@lorem.com"
-                className={`block w-full p-4 py-2 mt-1 border border-solid ${
-                  formErrors.email !== ""
-                    ? "border-[#ed3548]"
-                    : "border-[#adbeff]"
-                } rounded-md`}
-                value={inputs.email}
-                onChange={(e) => updateFields(e)}
-              />
-            </div>
-
-            <div className="mt-5">
-              <label htmlFor="phone" className="text-[#02295a] font-semibold">
-                Phone Number
-              </label>
-
-              {formErrors.phone && (
-                <span className="inline-block float-right text-[#ed3548] font-semibold">
-                  {formErrors.phone}
-                </span>
-              )}
-
-              <input
-                type="text"
-                id="phone"
-                name="phone"
-                placeholder="e.g. +1 234 567 890"
-                className={`block w-full p-4 py-2 mt-1 border border-solid ${
-                  formErrors.phone !== ""
-                    ? "border-[#ed3548]"
-                    : "border-[#adbeff]"
-                } rounded-md`}
-                value={inputs.phone}
-                onChange={(e) => updateFields(e)}
-              />
-            </div>
-
-            <div className="bg-white p-4 md:p-0 absolute bottom-0 left-0 right-0 mt-5">
-              <button
-                type="button"
-                className="bg-[#02295a] text-white px-6 py-3 rounded-md float-right"
-                onClick={() => handleValidation(2)}
-              >
-                Next Step
-              </button>
-            </div>
-          </div>
+          <PersonalInfo
+            inputs={inputs}
+            formErrors={formErrors}
+            handleInputChange={handleInputChange}
+            handleValidation={handleValidation}
+          />
         )}
 
         {currentStep === 2 && (
-          <div className="bg-white md:bg-transparent rounded-xl -mt-10 mx-5 md:mt-10 md:mx-0 shadow-xl md:shadow-none p-6 pb-3 md:p-0 md:relative md:h-[90%]">
+          <div className="bg-white md:bg-transparent rounded-xl -mt-10 mx-5 md:mt-10 md:mx-0 shadow-xl md:shadow-none p-8 md:p-0 md:relative md:h-[90%]">
             <h2 className="font-bold text-3xl text-[#02295a]">
               Select your plan
             </h2>
@@ -386,7 +298,7 @@ const RegistrationFlow = () => {
         )}
 
         {currentStep === 3 && (
-          <div className="bg-white md:bg-transparent rounded-xl -mt-10 mx-5 md:mt-10 md:mx-0 shadow-xl md:shadow-none p-8 md:p-0 md:relative h-[90%]">
+          <div className="bg-white md:bg-transparent rounded-xl -mt-10 mx-5 md:mt-10 md:mx-0 shadow-xl md:shadow-none p-8 md:p-0 md:relative md:h-[90%]">
             <h2 className="font-bold text-3xl text-[#02295a]">Pick add-ons</h2>
 
             <p className="mt-2 md:mb-7 text-[#9699ab]">
