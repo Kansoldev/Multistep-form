@@ -2,6 +2,7 @@ import { useState, useEffect, ChangeEvent } from "react";
 import SideBar from "./SideBar";
 import PersonalInfo from "./PersonalInfo";
 import { findArrayIndex, capitalizeFirstLetter } from "../utils";
+import { Inputs, FormErrors } from "../types";
 
 // Store specific error messages here
 let nameErr = "";
@@ -56,12 +57,12 @@ const addons = [
 const RegistrationFlow = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [radioChecked, setRadioChecked] = useState(false);
-  const [inputs, setInputs] = useState({
+  const [inputs, setInputs] = useState<Inputs>({
     name: "",
     email: "",
     phone: "",
   });
-  const [formErrors, setFormErrors] = useState({
+  const [formErrors, setFormErrors] = useState<FormErrors>({
     name: "",
     email: "",
     phone: "",

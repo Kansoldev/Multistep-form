@@ -1,9 +1,11 @@
-function PersonalInfo({
+import { PersonalInfoProps } from "../types";
+
+const PersonalInfo: React.FC<PersonalInfoProps> = ({
   inputs,
   formErrors,
   handleInputChange,
   handleValidation,
-}) {
+}) => {
   return (
     <div className="bg-white md:bg-transparent rounded-xl -mt-10 mx-5 md:mt-10 md:mx-0 shadow-xl md:shadow-none p-8 md:p-0 md:relative md:h-[90%]">
       <h2 className="font-bold text-3xl text-[#02295a]">Personal Info</h2>
@@ -95,6 +97,6 @@ function PersonalInfo({
       </div>
     </div>
   );
-}
+};
 
 export default PersonalInfo;
