@@ -14,5 +14,5 @@ export interface PersonalInfoProps {
   inputs: Inputs;
   formErrors: FormErrors;
   handleInputChange: (e) => void;
-  handleValidation: (step: number) => void;
+  handleNextStep: () => void;
 }

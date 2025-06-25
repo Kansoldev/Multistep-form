@@ -4,11 +4,6 @@ import PersonalInfo from "./PersonalInfo";
 import { findArrayIndex, capitalizeFirstLetter } from "../utils";
 import { Inputs, FormErrors } from "../types";
 
-// Store specific error messages here
-let nameErr = "";
-let emailErr = "";
-let phoneErr = "";
-
 // Use this variable to add up the prices of selected addons
 let selectedAddonPrices = 0;
 
@@ -105,45 +100,47 @@ const RegistrationFlow = () => {
     setSelectedAddons(updatedSelectedAddons);
   }, [radioChecked]);
 
+  function handleNextStep(step: number) {
+    if (step === 2) {
+      if (validatePersonalInfo()) {
+        setCurrentStep(step);
+      }
+    } else {
+      setCurrentStep(step);
+    }
+  }
+
+  // Handlers for Personal Info
   function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
     setInputs((prevInputs) => {
       return { ...prevInputs, [event.target.name]: event.target.value };
     });
   }
 
-  function handleValidation(num: number) {
+  function validatePersonalInfo() {
+    const newErrors = { name: "", email: "", phone: "" };
+    let isValid = true;
+
     if (inputs.name === "") {
-      nameErr = "This field is required";
+      newErrors.name = "This field is required";
+      isValid = false;
     } else if (inputs.name.length < 5) {
-      nameErr = "Name must be at least 5 characters long";
-    } else {
-      nameErr = "";
+      newErrors.name = "Name must be at least 5 characters long";
+      isValid = false;
     }
 
     if (inputs.email === "") {
-      emailErr = "This field is required";
-    } else {
-      emailErr = "";
+      newErrors.email = "This field is required";
+      isValid = false;
     }
 
     if (inputs.phone === "") {
-      phoneErr = "This field is required";
-    } else {
-      phoneErr = "";
+      newErrors.phone = "This field is required";
+      isValid = false;
     }
 
-    setFormErrors((prevErrors) => {
-      return {
-        ...prevErrors,
-        name: nameErr,
-        email: emailErr,
-        phone: phoneErr,
-      };
-    });
-
-    if (nameErr === "" && emailErr === "" && phoneErr === "") {
-      setCurrentStep(num);
-    }
+    setFormErrors(newErrors);
+    return isValid;
   }
 
   function handleUserAddons(userAddons: {
@@ -197,7 +194,7 @@ const RegistrationFlow = () => {
             inputs={inputs}
             formErrors={formErrors}
             handleInputChange={handleInputChange}
-            handleValidation={handleValidation}
+            handleNextStep={() => handleNextStep(2)}
           />
         )}
 

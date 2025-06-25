@@ -4,7 +4,7 @@ const PersonalInfo: React.FC<PersonalInfoProps> = ({
   inputs,
   formErrors,
   handleInputChange,
-  handleValidation,
+  handleNextStep,
 }) => {
   return (
     <div className="bg-white md:bg-transparent rounded-xl -mt-10 mx-5 md:mt-10 md:mx-0 shadow-xl md:shadow-none p-8 md:p-0 md:relative md:h-[90%]">
@@ -90,7 +90,7 @@ const PersonalInfo: React.FC<PersonalInfoProps> = ({
         <button
           type="button"
           className="bg-[#02295a] text-white px-6 py-3 rounded-md float-right"
-          onClick={() => handleValidation(2)}
+          onClick={handleNextStep}
         >
           Next Step
         </button>
