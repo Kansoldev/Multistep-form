@@ -10,9 +10,32 @@ export interface FormErrors {
   phone: string;
 }
 
+export interface Plans {
+  name: string;
+  icon: string;
+  desc?: string;
+  monthlyPrice: number;
+  yearlyPrice: number;
+}
+
+export interface CurrentPlan {
+  name: string;
+  price: number;
+}
+
 export interface PersonalInfoProps {
   inputs: Inputs;
   formErrors: FormErrors;
   handleInputChange: (e) => void;
+  handleNextStep: () => void;
+}
+
+export interface SelectPlanProps {
+  plans: Plans[];
+  currentPlan: CurrentPlan;
+  radioChecked: boolean;
+  handlePlanUpdate: (plan: Plans) => void;
+  handleToggleRadioChecked: () => void;
+  handlePrevStep: () => void;
   handleNextStep: () => void;
 }
