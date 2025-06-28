@@ -2,8 +2,9 @@ import { useState, useEffect, ChangeEvent } from "react";
 import SideBar from "./SideBar";
 import PersonalInfo from "./PersonalInfo";
 import SelectPlan from "./SelectPlan";
+import SelectAddons from "./SelectAddons";
 import { findArrayIndex, capitalizeFirstLetter } from "../utils";
-import { Inputs, FormErrors, Plans } from "../types";
+import { Inputs, FormErrors, Plans, Addons } from "../types";
 
 // Use this variable to add up the prices of selected addons
 let selectedAddonPrices = 0;
@@ -29,7 +30,7 @@ const plans: Plans[] = [
   },
 ];
 
-const addons = [
+const addons: Addons[] = [
   {
     name: "online service",
     desc: "Access to multiplayer games",
@@ -152,41 +153,40 @@ const RegistrationFlow = () => {
     return isValid;
   }
 
-  function handleUserAddons(userAddons: {
-    name: string;
-    monthlyPrice: number;
-    yearlyPrice: number;
-  }) {
-    const addonIndex = findArrayIndex(selectedAddons, userAddons);
-
-    if (addonIndex === -1) {
-      // The addon is not in the array before, so push it inside the selectedAddon array
-      const newSelectedAddons = [
-        ...selectedAddons,
-        {
-          name: userAddons.name,
-          price: radioChecked
-            ? userAddons.yearlyPrice
-            : userAddons.monthlyPrice,
-        },
-      ];
-
-      setSelectedAddons(newSelectedAddons);
-    } else {
-      const newSelectedAddons = selectedAddons.filter(
-        (addon) => addon.name !== userAddons.name
-      );
-
-      setSelectedAddons(newSelectedAddons);
-    }
-  }
-
   // Handlers for SelectPlan
   function handlePlanUpdate(plan: Plans) {
     setCurrentPlan({
       name: plan.name,
       price: radioChecked ? plan.yearlyPrice : plan.monthlyPrice,
     });
+  }
+
+  // Handlers for SelectAddons
+  function handleUserAddons(userSelectedAddon: Addons) {
+    let newSelectedAddons = []; // To store users selected addons
+
+    // Check if the users selected addon exists in selectedAddons array
+    const addonIndex = findArrayIndex(selectedAddons, userSelectedAddon);
+
+    if (addonIndex === -1) {
+      // Add it inside the selectedAddons array
+      newSelectedAddons = [
+        ...selectedAddons,
+        {
+          name: userSelectedAddon.name,
+          price: radioChecked
+            ? userSelectedAddon.yearlyPrice
+            : userSelectedAddon.monthlyPrice,
+        },
+      ];
+    } else {
+      // it exists in the array, so remove it
+      newSelectedAddons = selectedAddons.filter(
+        (addon) => addon.name !== userSelectedAddon.name
+      );
+    }
+
+    setSelectedAddons(newSelectedAddons);
   }
 
   return (
@@ -216,67 +216,14 @@ const RegistrationFlow = () => {
         )}
 
         {currentStep === 3 && (
-          <div className="bg-white md:bg-transparent rounded-xl -mt-10 mx-5 md:mt-10 md:mx-0 shadow-xl md:shadow-none p-8 md:p-0 md:relative md:h-[90%]">
-            <h2 className="font-bold text-3xl text-[#02295a]">Pick add-ons</h2>
-
-            <p className="mt-2 md:mb-7 text-[#9699ab]">
-              Add-ons help enhance your gaming experience
-            </p>
-
-            {addons.map((addon) => (
-              <label
-                key={addon.name}
-                htmlFor={addon.name}
-                className="block mt-4"
-              >
-                <input
-                  type="checkbox"
-                  name="addons"
-                  id={addon.name}
-                  value={addon.name}
-                  className="absolute opacity-0 w-0 h-0"
-                  onClick={() => handleUserAddons(addon)}
-                  defaultChecked={findArrayIndex(selectedAddons, addon) !== -1}
-                />
-
-                <div className="border border-solid border-[#d6d9e6] p-4 min-[420px]:flex items-center justify-between rounded-lg">
-                  <span className="block w-5 h-5 bg-white rounded-[4px] border border-solid border-[#d6d9e6] cursor-pointer"></span>
-
-                  <div className="basis-56 md:ml-5 lg:ml-0">
-                    <h3 className="text-[#02295a] font-bold mt-3 min-[420px]:mt-0">
-                      {capitalizeFirstLetter(addon.name)}
-                    </h3>
-                    <p className="text-[#9699ab] text-sm"> {addon.desc}</p>
-                  </div>
-
-                  <span className="text-[#473dff]">
-                    +$
-                    {radioChecked
-                      ? `${addon.yearlyPrice}/yr`
-                      : `${addon.monthlyPrice}/mo`}
-                  </span>
-                </div>
-              </label>
-            ))}
-
-            <div className="flex justify-between bg-white p-4 md:p-0 absolute right-0 bottom-0 left-0 mt-5">
-              <button
-                type="button"
-                className="text-[#02295a] rounded-lg ml-2"
-                onClick={() => setCurrentStep((prevStep) => prevStep - 1)}
-              >
-                Go Back
-              </button>
-
-              <button
-                type="button"
-                className="bg-[#02295a] text-white px-6 py-3 rounded-md"
-                onClick={() => setCurrentStep(4)}
-              >
-                Next Step
-              </button>
-            </div>
-          </div>
+          <SelectAddons
+            addons={addons}
+            radioChecked={radioChecked}
+            selectedAddons={selectedAddons}
+            handleUserAddons={handleUserAddons}
+            handlePrevStep={handlePrevStep}
+            handleNextStep={() => handleNextStep(4)}
+          />
         )}
 
         {currentStep === 4 && (
